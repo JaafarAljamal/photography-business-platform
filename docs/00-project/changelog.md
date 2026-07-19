@@ -22,10 +22,10 @@ Unlike the Git history, this document summarizes major project achievements and 
 - Documentation Index created.
 - Project Roadmap approved.
 - Sprint Backlog approved.
+- ADR-001: Project Structure.
 
 ## In Progress
 
-- ADR-001: Project Structure.
 - ADR-002: Monolithic Architecture.
 - ADR-003: Blade.
 - ADR-004: Tailwind CSS.
