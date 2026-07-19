@@ -28,11 +28,13 @@ Unlike the Git history, this document summarizes major project achievements and 
 - ADR-003: Blade.
 - ADR-004: Tailwind CSS.
 - ADR-005: Domain-Driven Design.
+- ADR-006: Test-Driven Development.
+- Sprint 0 completed.
 
 ## In Progress
 
-- ADR-006: Test-Driven Development.
+_None._
 
 ## Pending
 
-- Sprint 0 completion.
+_None._
