@@ -27,10 +27,10 @@ Unlike the Git history, this document summarizes major project achievements and 
 - ADR-002: Monolithic Architecture.
 - ADR-003: Blade.
 - ADR-004: Tailwind CSS.
+- ADR-005: Domain-Driven Design.
 
 ## In Progress
 
-- ADR-005: Domain-Driven Design.
 - ADR-006: Test-Driven Development.
 
 ## Pending
