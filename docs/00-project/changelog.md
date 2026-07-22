@@ -38,3 +38,24 @@ _None._
 ## Pending
 
 _None._
+
+---
+
+# Sprint 1 — Requirements & Domain Analysis
+
+## Completed
+
+- Functional Requirements.
+
+## In Progress
+
+- Non-functional Requirements.
+
+## Pending
+
+- Business Process.
+- Use Cases.
+- Booking Lifecycle.
+- Ubiquitous Language.
+- Domain Model.
+- Domain Events.
