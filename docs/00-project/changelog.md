@@ -46,14 +46,14 @@ _None._
 ## Completed
 
 - Functional Requirements.
+- Non-functional Requirements.
 
 ## In Progress
 
-- Non-functional Requirements.
+- Business Process.
 
 ## Pending
 
-- Business Process.
 - Use Cases.
 - Booking Lifecycle.
 - Ubiquitous Language.
