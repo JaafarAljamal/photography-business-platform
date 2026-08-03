@@ -1,0 +1,46 @@
+<mxfile host="Electron">
+  <diagram name="UC-07-Business-Administration" id="ZjHPu11L5PAC3JU6Ii9F">
+    <mxGraphModel dx="1147" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=18;verticalAlign=top;" value="Photography Business System" vertex="1">
+          <mxGeometry height="600" width="900" x="380" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=1;fontSize=16;" value="Photographer" vertex="1">
+          <mxGeometry height="100" width="50" x="240" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;rounded=1;fontSize=15;" value="Manage Business Information" vertex="1">
+          <mxGeometry height="70" width="200" x="730" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-4" edge="1" parent="1" source="-V5iz1ccJff6H_b1o9Jg-2" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;endArrow=none;endFill=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="-V5iz1ccJff6H_b1o9Jg-3" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points" />
+            <mxPoint x="310" y="800" as="sourcePoint" />
+            <mxPoint x="390" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;rounded=1;fontSize=15;" value="Manage Contact Information" vertex="1">
+          <mxGeometry height="70" width="200" x="730" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-6" edge="1" parent="1" source="-V5iz1ccJff6H_b1o9Jg-2" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="-V5iz1ccJff6H_b1o9Jg-5" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points" />
+            <mxPoint x="240" y="840" as="sourcePoint" />
+            <mxPoint x="320" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;rounded=1;fontSize=15;" value="Manage Business Policies" vertex="1">
+          <mxGeometry height="70" width="200" x="730" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="-V5iz1ccJff6H_b1o9Jg-8" edge="1" parent="1" source="-V5iz1ccJff6H_b1o9Jg-2" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="-V5iz1ccJff6H_b1o9Jg-7" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points" />
+            <mxPoint x="310" y="780" as="sourcePoint" />
+            <mxPoint x="390" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

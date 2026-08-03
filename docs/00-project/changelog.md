@@ -48,14 +48,14 @@ _None._
 - Functional Requirements.
 - Non-functional Requirements.
 - Business Process.
+- Use Cases.
 
 ## In Progress
 
-- Use Cases.
+- Booking Lifecycle.
 
 ## Pending
 
-- Booking Lifecycle.
 - Ubiquitous Language.
 - Domain Model.
 - Domain Events.
