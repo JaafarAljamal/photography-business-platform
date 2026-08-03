@@ -50,12 +50,15 @@ _None._
 - Business Process.
 - Use Cases.
 - Booking Lifecycle.
+- Ubiquitous Language.
 
 ## In Progress
 
-- Ubiquitous Language.
+- Domain Model.
 
 ## Pending
 
-- Domain Model.
 - Domain Events.
+
+---
+
