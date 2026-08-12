@@ -51,14 +51,15 @@ _None._
 - Use Cases.
 - Booking Lifecycle.
 - Ubiquitous Language.
+- Domain Model.
 
 ## In Progress
 
-- Domain Model.
+- Domain Events.
 
 ## Pending
 
-- Domain Events.
+_None._
 
 ---
 
