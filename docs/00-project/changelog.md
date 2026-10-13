@@ -52,10 +52,11 @@ _None._
 - Booking Lifecycle.
 - Ubiquitous Language.
 - Domain Model.
+- Domain Events.
 
 ## In Progress
 
-- Domain Events.
+_None._
 
 ## Pending
 
