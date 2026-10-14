@@ -53,6 +53,7 @@ _None._
 - Ubiquitous Language.
 - Domain Model.
 - Domain Events.
+- Sprint 1 completed.
 
 ## In Progress
 
@@ -61,6 +62,49 @@ _None._
 ## Pending
 
 _None._
+
+---
+
+# Sprint 2 — System Design
+
+## Completed
+
+- System Overview.
+
+## In Progress
+
+- Project Structure.
+
+## Pending
+
+- C4 Context Diagram.
+- C4 Container Diagram.
+- C4 Component Diagram.
+- Clean Architecture.
+- Strategic Design.
+- Tactical Design.
+- Database Conceptual Model.
+- Database Logical Model.
+- Database Physical Model.
+- ERD.
+- Database Indexes.
+- Database Constraints.
+- Database Naming Conventions.
+- Database Migration Strategy.
+- API Design.
+- Validation Rules.
+- Portfolio Sequence Diagram.
+- Booking Sequence Diagram.
+- Payment Sequence Diagram.
+- Notification Sequence Diagram.
+- Booking State Diagram.
+- Payment State Diagram.
+- Inquiry State Diagram.
+- Testing Strategy.
+- Test Plan.
+- Unit Testing approach.
+- Feature Testing approach.
+- TDD Workflow.
 
 ---
 
