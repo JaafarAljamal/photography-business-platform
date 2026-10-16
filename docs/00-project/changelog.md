@@ -70,14 +70,14 @@ _None._
 ## Completed
 
 - System Overview.
+- Project Structure.
 
 ## In Progress
 
-- Project Structure.
+- C4 Context Diagram.
 
 ## Pending
 
-- C4 Context Diagram.
 - C4 Container Diagram.
 - C4 Component Diagram.
 - Clean Architecture.
