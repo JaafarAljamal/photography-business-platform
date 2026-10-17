@@ -72,14 +72,14 @@ _None._
 - System Overview.
 - Project Structure.
 - C4 Context Diagram.
+- C4 Container Diagram.
 
 ## In Progress
 
-- C4 Container Diagram.
+- C4 Component Diagram.
 
 ## Pending
 
-- C4 Component Diagram.
 - Clean Architecture.
 - Strategic Design.
 - Tactical Design.
