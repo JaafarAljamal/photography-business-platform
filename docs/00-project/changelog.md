@@ -73,14 +73,14 @@ _None._
 - Project Structure.
 - C4 Context Diagram.
 - C4 Container Diagram.
+- C4 Component Diagram.
 
 ## In Progress
 
-- C4 Component Diagram.
+- Clean Architecture.
 
 ## Pending
 
-- Clean Architecture.
 - Strategic Design.
 - Tactical Design.
 - Database Conceptual Model.
