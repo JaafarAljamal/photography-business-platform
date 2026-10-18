@@ -77,12 +77,12 @@ _None._
 
 ## In Progress
 
-- Clean Architecture.
+- Strategic Design.
 
 ## Pending
 
-- Strategic Design.
 - Tactical Design.
+- Clean Architecture.
 - Database Conceptual Model.
 - Database Logical Model.
 - Database Physical Model.

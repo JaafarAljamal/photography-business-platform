@@ -157,6 +157,13 @@ photography-business-platform/
     │   ├── 04-c4-container.md
     │   ├── 05-c4-component.md
     │   ├── 06-clean-architecture.md
+    │   ├── diagrams/
+    │   │   ├── 03-c4-context.drawio
+    │   │   ├── 03-c4-context.drawio.png
+    │   │   ├── 04-c4-container.drawio
+    │   │   ├── 04-c4-container.drawio.png
+    │   │   ├── 05-c4-component.drawio
+    │   │   └── 05-c4-component.drawio.png
     │   └── adrs/
     │       ├── ADR-001-project-structure.md
     │       ├── ADR-002-monolith.md
