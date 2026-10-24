@@ -74,14 +74,14 @@ _None._
 - C4 Context Diagram.
 - C4 Container Diagram.
 - C4 Component Diagram.
+- Strategic Design.
 
 ## In Progress
 
-- Strategic Design.
+- Tactical Design.
 
 ## Pending
 
-- Tactical Design.
 - Clean Architecture.
 - Database Conceptual Model.
 - Database Logical Model.
