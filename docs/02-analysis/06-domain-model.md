@@ -6,7 +6,7 @@ This document defines the conceptual domain model of the Photography Business Pl
 
 Its purpose is to identify the core business concepts, describe their relationships, and establish a shared understanding of the business domain before software implementation begins.
 
-The domain model serves as the foundation for:
+The domain model serves as a foundation for:
 
 - Strategic Design
 - Tactical Design
@@ -15,7 +15,7 @@ The domain model serves as the foundation for:
 - API Design
 - Software Implementation
 
-This document describes the business domain from a conceptual perspective and intentionally avoids implementation details such as database tables, framework-specific classes, or technical architecture.
+This document describes the business domain from a conceptual perspective. It intentionally avoids implementation details such as database tables, framework-specific classes, and technical architecture.
 
 ---
 
@@ -23,19 +23,19 @@ This document describes the business domain from a conceptual perspective and in
 
 The domain model covers the business activities required to operate a single photography business.
 
-The platform focuses on managing the complete client journey, from the first inquiry through booking, photography sessions, payments, and invoicing.
+The platform supports the client journey from discovering the photographer's work and submitting inquiries or booking requests through booking management, photography sessions, payments, and invoicing.
 
 The domain includes:
 
 - Portfolio Management
-- Photography Services
-- Packages
-- Client Inquiries
+- Services & Packages
+- Client Management
+- Inquiry Management
 - Booking Management
-- Photography Sessions
 - Payment Management
 - Invoice Management
 - Business Information Management
+- Notification Management
 
 The following concerns are intentionally outside the scope of the domain model:
 
@@ -45,6 +45,8 @@ The following concerns are intentionally outside the scope of the domain model:
 - Third-party accounting systems
 - Physical equipment management
 - Photographer payroll management
+- Online payment gateway integration
+- Client photo delivery and gallery workflows
 
 ---
 
@@ -52,71 +54,76 @@ The following concerns are intentionally outside the scope of the domain model:
 
 The Photography Business Platform is a business management system designed to support the operations of a single photography business.
 
-The domain covers the complete lifecycle of photography services, from attracting potential clients through the public portfolio to managing bookings, photography sessions, payments, invoices, and business administration.
+The domain covers the activities required to attract potential clients, manage their inquiries and booking requests, coordinate photography sessions, record and confirm payments, and generate invoices.
 
 The business revolves around one central concept:
 
 > Delivering photography services through a managed booking lifecycle.
 
-Every business capability within the domain ultimately supports this lifecycle.
+Booking Management represents the Core Domain. Other business capabilities support the booking lifecycle or provide independent business functionality.
 
 ### Domain Discovery
 
 The domain model was derived from the project's business requirements, business process documentation, booking lifecycle, use cases, and ubiquitous language.
 
-These artifacts were analyzed to identify the core business concepts, their relationships, and the boundaries of the business domain before making any software design decisions.
+These artifacts were analyzed to identify the core business concepts, their relationships, and their boundaries before making software design decisions.
 
 ---
 
 ## 4. Domain Classification
 
-Following Domain-Driven Design (DDD), the business domain is divided into three categories:
+Following Domain-Driven Design (DDD), the business domain is classified into three categories:
 
 - Core Domain
 - Supporting Domains
 - Generic Subdomains
 
-### Core Domain
+### 4.1 Core Domain
 
-The Core Domain represents the primary business capability that differentiates the Photography Business Platform.
+The Core Domain represents the primary business capability that delivers the platform's central business value.
 
 For this project, the Core Domain is:
 
 - Booking Management
 
-This domain coordinates the complete photography booking lifecycle, including booking requests, booking confirmation, photography sessions, payment progress, and the financial completion of bookings.
+Booking Management coordinates the booking lifecycle, including booking requests, booking terms, approval, confirmation, photography sessions, and booking completion.
 
-### Supporting Domains
+It also evaluates financial information received from Payment Management to determine whether the booking's financial conditions for confirmation or completion have been satisfied.
 
-Supporting Domains provide essential business capabilities that enable the Core Domain but do not represent the primary business value.
+### 4.2 Supporting Domains
 
-The supporting domains are:
+Supporting Domains provide business capabilities that support the Core Domain or other business operations.
 
-- Portfolio Management
-- Photography Services
-- Package Management
+The Supporting Domains are:
+
+- Client Management
+- Services & Packages
 - Inquiry Management
 - Payment Management
 - Invoice Management
-- Business Information Management
+- Portfolio Management
+- Business Information
 
-### Generic Subdomains
+Payment Management is an independent Bounded Context responsible for payment recording, confirmation, and refunds. Its independence does not make it part of the Core Domain.
 
-Generic Subdomains provide common capabilities that are required by the system but are not specific to the photography business itself.
+Portfolio Management is a Supporting Domain that supports public presentation of the photographer's work and client acquisition.
+
+### 4.3 Generic Subdomains and Capabilities
+
+Generic capabilities provide common functionality that is not specific to the photography business.
 
 Examples include:
 
 - Authentication
 - Authorization
-- Notifications
 - Localization
 - File Storage
+
+Notification delivery is a cross-cutting capability with an explicit logical Notification Management context in the domain design.
 
 ---
 
 ## 5. Core Business Concepts
-
-The Photography Business Platform is built around a set of business concepts that represent the language of the photography business.
 
 The following concepts form the conceptual foundation of the domain model.
 
@@ -124,9 +131,12 @@ The following concepts form the conceptual foundation of the domain model.
 
 - Visitor
 - Client
+
+### Inquiry Management
+
 - Inquiry
 
-### Service Management
+### Services & Packages
 
 - Photography Service
 - Package
@@ -136,10 +146,16 @@ The following concepts form the conceptual foundation of the domain model.
 - Booking Request
 - Booking
 - Photography Session
+- Booking Financial Snapshot
 
-### Financial Management
+### Payment Management
 
 - Payment
+- Refund
+- Financial Position
+
+### Invoice Management
+
 - Invoice
 
 ### Portfolio Management
@@ -148,160 +164,228 @@ The following concepts form the conceptual foundation of the domain model.
 - Album
 - Category
 
-### Business Management
+### Business Information
 
 - Photographer
+- Business Profile
+
+### Notification Management
+
+- Notification
 
 ---
 
 ## 6. Relationships Between Concepts
 
-The core business concepts are related through the business processes of attracting clients, requesting and managing bookings, delivering photography sessions, and processing payments.
+The business concepts are related through the activities of attracting clients, managing inquiries and bookings, delivering photography sessions, recording payments, and generating invoices.
 
-### Client Acquisition
+### 6.1 Client Acquisition
 
 A `Visitor` may submit an `Inquiry` to request information about the photographer's services.
 
-An `Inquiry` may be submitted by either a `Visitor` or an existing `Client` and remains independent from the booking lifecycle.
+An `Inquiry` may be submitted by either a `Visitor` or an existing `Client` and remains independent of the booking lifecycle.
 
-A `Visitor` becomes a `Client` when a `Booking Request` is submitted.
+Submitting an Inquiry does not create a Client.
 
-### Service Selection
+A Visitor becomes a Client when a Booking Request is submitted.
+
+A `Client` is managed independently and may have multiple Bookings and Inquiries over time.
+
+### 6.2 Service Selection
 
 A `Client` may request one or more `Photography Services`.
 
-A `Photography Service` may be offered as part of a predefined `Package` or requested as a custom service.
+A `Package` represents a predefined offering that includes one or more Photography Services.
 
-### Booking
+A Booking may be based on a selected Package, individual Photography Services, or an agreed combination of services.
 
-A `Booking Request` represents a client's request to obtain photography services and is subject to the photographer's review and approval.
+The Booking preserves the agreed service and pricing terms for that booking. Later changes to the service catalog or package definition must not silently change the terms of an existing Booking.
 
-Once approved, the request becomes a `Booking`.
+### 6.3 Booking
 
-A `Booking` belongs to one `Client` and may contain one or more `Photography Sessions`.
+A `Booking Request` represents a client's request to obtain photography services and is a stage in the Booking lifecycle, not an independent Aggregate.
 
-### Photography Sessions
+The request is reviewed by the Photographer and may be approved or rejected.
 
-A `Photography Session` represents a scheduled photography activity within a `Booking`.
+An approved request may proceed to confirmation according to the booking rules.
 
-A `Booking` may contain multiple sessions, and a session belongs to exactly one booking.
+A `Booking` belongs to exactly one `Client` and represents the agreed business arrangement between the Client and the Photographer.
 
-### Payments
+A Booking may contain one or more Photography Sessions.
 
-A `Booking` may have one or more `Payments`.
+### 6.4 Photography Sessions
 
-Payments may be recorded as installments.
+A `Photography Session` represents a scheduled photography activity within a Booking.
 
-The booking's financial status is determined by the confirmed payments and the remaining balance.
+A Booking may contain multiple sessions, potentially scheduled on different dates.
 
-### Invoices
+Each Photography Session belongs to exactly one Booking.
 
-An `Invoice` is generated for a confirmed `Payment`.
+Photography Sessions are managed within the Booking consistency boundary. Their lifecycle changes are performed through the Booking Aggregate.
 
-An `Invoice` is associated with the corresponding `Payment` and `Client`.
+`PhotographySessionCompleted` is an internal domain event within Booking Management. It is not a cross-context integration event.
 
-### Portfolio
+### 6.5 Payments and Financial Position
 
-A `Portfolio` represents the photographer's public work.
+A `Payment` represents an individual payment recorded against a Booking.
 
-A `Portfolio` contains `Albums`, and `Albums` contain portfolio content organized using `Categories`.
+A Booking may have multiple Payments, including installment payments.
 
-Portfolio management is independent from the booking lifecycle but supports client acquisition.
+Payment Management independently owns payment recording, confirmation, and refund processing.
+
+A Payment is not part of the Booking Aggregate. It has its own lifecycle and consistency boundary.
+
+The financial position of a Booking is derived by Payment Management from its confirmed payments and confirmed refunds.
+
+The financial calculation is based on:
+
+- Net Amount Paid = Confirmed Payments − Confirmed Refunds
+- Remaining Balance = Agreed Total − Net Amount Paid
+
+Pending or rejected payments are not included in the calculation.
+
+Booking Management receives the relevant financial facts and maintains a `BookingFinancialSnapshot` for evaluating its own lifecycle rules.
+
+The snapshot is not the authoritative financial record and does not make Payment part of the Booking Aggregate.
+
+### 6.6 Invoices
+
+An `Invoice` is generated for each individually confirmed Payment.
+
+Each Invoice is associated with exactly one Payment and its corresponding Client.
+
+An Invoice preserves the financial information applicable at the time of generation, including:
+
+- The individual confirmed payment
+- Cumulative confirmed payments
+- Confirmed refunds where applicable
+- Remaining balance
+
+Invoice generation is independent of whether the Booking has been fully paid.
+
+Generating an Invoice and delivering it to the Client are separate activities. Successful generation does not imply successful email delivery.
+
+### 6.7 Portfolio
+
+The `Portfolio` represents the photographer's publicly presented work.
+
+A Portfolio contains `Albums`, which organize portfolio content.
+
+An `Album` is managed as an independent business unit with its own lifecycle, including creation, updating, publishing, and unpublishing.
+
+Categories organize or classify portfolio content.
+
+Portfolio Management supports client acquisition but remains independent of the Booking lifecycle.
+
+### 6.8 Business Information
+
+The Photographer maintains a `Business Profile` containing the business information presented to visitors and clients.
+
+Business Profile management is independent of individual Bookings.
+
+### 6.9 Notifications
+
+A `Notification` represents a notification delivery request or record associated with a business activity.
+
+Notification Management coordinates notification delivery in response to relevant business events.
+
+It does not own the business state that caused the notification.
 
 ---
 
-## 6. Aggregate Candidates
+## 7. Aggregate Boundaries and Ownership
 
-At this stage, the following concepts are identified as potential Aggregate boundaries based on their business responsibilities, lifecycles, and consistency requirements.
+Strategic Design and Tactical Design established the following Aggregate Roots and consistency boundaries.
 
-Aggregates are identified as candidate consistency boundaries around business concepts that must be managed together to protect business invariants.
+An Aggregate is a consistency boundary that protects business invariants. Its Aggregate Root is the entry point through which changes to the Aggregate are performed.
 
-At this stage, the boundaries are considered candidates rather than final tactical design decisions. They will be refined during Tactical Design based on business invariants, transactional consistency requirements, and ownership rules.
+The following table summarizes the approved boundaries.
 
-### Booking
+| Bounded Context | Aggregate Root | Consistency Boundary |
+|---|---|---|
+| Booking Management | `Booking` | Booking lifecycle, agreed terms, Photography Sessions, and booking financial snapshot |
+| Client Management | `Client` | Client information and lifecycle |
+| Services & Packages | `PhotographyService` | Individual service definition |
+| Services & Packages | `Package` | Package definition and included service references |
+| Payment Management | `Payment` | Individual payment, confirmation state, and associated refunds |
+| Invoice Management | `Invoice` | Invoice data and its preserved financial snapshot |
+| Inquiry Management | `Inquiry` | Inquiry details and status |
+| Portfolio Management | `Album` | Album information, content organization, and publication lifecycle |
+| Business Information | `BusinessProfile` | Business profile information |
+| Notification Management | `Notification` | Notification request, delivery state, and retry lifecycle |
 
-`Booking` is the primary aggregate candidate because it represents the central business transaction of the photography business.
+### 7.1 Booking Aggregate
 
-The booking lifecycle requires consistency between:
+`Booking` is the Aggregate Root of Booking Management.
 
-- Booking status
-- Photography Sessions
-- Payment progress
-- Remaining balance
+Its consistency boundary includes:
 
-`Booking` is therefore a strong candidate for an Aggregate Root.
+- Booking details and lifecycle status
+- Agreed booking terms
+- Required Photography Sessions
+- Booking Financial Snapshot
 
-### Portfolio
+`PhotographySession` is an internal Entity within the Booking Aggregate.
 
-`Portfolio` is a candidate Aggregate because portfolio content is managed as a cohesive business capability.
+Changes to a Photography Session are performed through the Booking Aggregate to protect booking-level invariants, including the conditions required for booking completion.
 
-Potentially related concepts include:
+`BookingFinancialSnapshot` is maintained for Booking Management's own lifecycle decisions. It is not an authoritative financial ledger and does not contain Payment Aggregates.
 
-- Albums
-- Portfolio Categories
+### 7.2 Payment Aggregate
 
-`Portfolio` may act as the Aggregate Root for portfolio content that must be managed together.
+`Payment` is an independent Aggregate Root in Payment Management.
 
-### Invoice
+Each Payment has its own lifecycle and consistency boundary.
 
-`Invoice` is a candidate Aggregate because it represents a financial document with its own lifecycle and business rules.
+A Payment may contain one or more associated Refund Entities. A Refund is not a separate Aggregate Root.
 
-The Invoice must remain internally consistent once generated and issued.
+Payment Management owns the authoritative payment and refund records.
 
-### Inquiry
+### 7.3 Financial Position
 
-`Inquiry` is a candidate Aggregate because it represents an independent communication between a potential or existing client and the Photographer.
+The `Financial Position` is a calculated projection derived from confirmed payments and confirmed refunds.
 
-Its lifecycle is independent from the Booking lifecycle.
+It is not an Aggregate Root.
 
-### Client
+Payment Management calculates and provides the financial facts required by other contexts without transferring ownership of its Payment Aggregates.
 
-`Client` is a candidate Aggregate because client information represents an independently managed business concept.
+### 7.4 Invoice Aggregate
 
-A Client may exist independently from a specific Booking and may have multiple Bookings over time.
+`Invoice` is an independent Aggregate Root in Invoice Management.
 
-This suggests that Client may have an independent Aggregate boundary.
+An Invoice is generated for one individually confirmed Payment and preserves the relevant financial information at generation time.
 
-### Payment
+The relationship between Payment and Invoice must ensure that no more than one Invoice is generated for the same Payment.
 
-`Payment` is considered a candidate Entity within the Booking consistency boundary rather than an independent Aggregate at this stage.
+Invoice delivery is managed separately from Invoice generation.
 
-A Payment contributes to the financial state of its related Booking, particularly:
+### 7.5 Services and Packages Aggregates
 
-- Confirmed payment amount
-- Remaining balance
-- Booking confirmation
-- Fully paid status
+`PhotographyService` and `Package` are independent Aggregate Roots within Services & Packages.
 
-Its final boundary will be validated during Tactical Design.
+A Photography Service has its own definition and lifecycle.
 
-### Photography Session
+A Package has its own definition and lifecycle and maintains references to the Photography Services it includes.
 
-`Photography Session` is considered a candidate Entity within the Booking consistency boundary.
+The two concepts have separate consistency boundaries. Updating a service does not require modifying the Package Aggregate, and updating a Package does not require modifying its referenced Photography Services.
 
-A Session belongs to a Booking and its lifecycle is dependent on the related Booking.
+### 7.6 Other Aggregates
 
-### Photography Service
+The remaining Aggregate Roots have the following responsibilities:
 
-`Photography Service` is a candidate Aggregate because it is managed independently from individual Bookings.
-
-It may be created, modified, activated, or deactivated by the Photographer without being part of a specific Booking.
-
-Its final Aggregate boundary will be validated during Tactical Design.
-
-### Package
-
-`Package` is a candidate Aggregate because it is a predefined offering managed independently from individual Bookings.
-
-A Booking may reference a selected Package, while the Package itself has its own lifecycle.
-
-Its final Aggregate boundary will be validated during Tactical Design.
-
-> These are preliminary Aggregate candidates rather than final tactical design decisions. Final Aggregate boundaries will be determined during Tactical Design based on business invariants, transactional consistency requirements, and ownership rules.
+- `Client`: owns independently managed client information.
+- `Inquiry`: owns an independent inquiry lifecycle.
+- `Album`: owns album information, content organization, and publication lifecycle.
+- `BusinessProfile`: owns the photographer's business profile information.
+- `Notification`: owns the notification delivery lifecycle.
 
 ---
 
-## 7. Domain Model Diagram
+## 8. Domain Model Diagram
+
+The following diagram illustrates the principal business concepts and their relationships.
+
+It is a conceptual relationship diagram. Associations between Aggregates represent business relationships and references, not shared Aggregate ownership or a shared consistency boundary.
 
 ```mermaid
 classDiagram
@@ -317,129 +401,187 @@ classDiagram
 
     class Booking {
         Booking details
+        Agreed terms
         Booking status
-        Booking balance
-        Payment progress
+        BookingFinancialSnapshot
     }
 
     class PhotographySession {
         Session details
         Session schedule
+        Session status
     }
 
     class PhotographyService {
-        Service details
-        Pricing
-        Availability
+        Service definition
     }
 
     class Package {
-        Package details
-        Pricing
-        Features
+        Package definition
+        Included service references
     }
 
     class Payment {
         Payment details
-        Amount
         Confirmation status
+    }
+
+    class Refund {
+        Refund details
+        Confirmation status
+    }
+
+    class FinancialPosition {
+        Net amount paid
+        Remaining balance
+        Financial revision
     }
 
     class Invoice {
         Invoice details
-        Amount
-        Status
+        Financial snapshot
+    }
+
+    class Album {
+        Album details
+        Publication status
+    }
+
+    class BusinessProfile {
+        Business information
+    }
+
+    class Notification {
+        Notification details
+        Delivery status
     }
 
     Client "1" --> "0..*" Booking : has
     Client "0..1" --> "0..*" Inquiry : submits
 
-    Booking "1" --> "1..*" PhotographySession : contains
-    Booking "1" --> "0..*" Payment : receives
-    Payment "1" --> "0..1" Invoice : generates
+    Booking "1" *-- "1..*" PhotographySession : contains
 
-    Booking "*" --> "0..1" Package : selects
-    Booking "*" --> "1..*" PhotographyService : includes
+    Booking "1" --> "0..*" Payment : payment reference
+    Payment "1" *-- "0..*" Refund : contains
+
+    Payment "0..*" --> "0..1" Invoice : invoice reference
+    Booking ..> FinancialPosition : financial information
+    Booking ..> Booking : preserves agreed terms
+
+    Package "0..*" --> "1..*" PhotographyService : references
+    Booking "0..*" --> "0..1" Package : selected package
+    Booking "0..*" --> "1..*" PhotographyService : agreed services
+
+    Album "*" --> "*" Client : may support acquisition
 ```
 
 ---
 
-## 8. Design Notes
+## 9. Design Notes
 
-The current domain model is an initial strategic representation of the business domain.
+### 9.1 Booking as the Central Business Concept
 
-The model intentionally focuses on business concepts and their relationships rather than implementation details, database structures, or final Aggregate boundaries.
+`Booking` remains the central business concept because it coordinates the delivery of photography services to a Client.
 
-Several relationships and boundaries remain subject to further refinement during Tactical Design.
+However, its central business role does not mean that all related concepts belong to the Booking Aggregate.
 
-### Booking as the Central Business Concept
+Payments, Invoices, Clients, and service catalog definitions have independent Aggregate boundaries and are managed by their respective Bounded Contexts.
 
-`Booking` is currently modeled as the central business concept because it coordinates the delivery of photography services to a client.
+### 9.2 Client Independence
 
-Its lifecycle is related to:
-
-- Photography Sessions
-- Payment Progress
-- Remaining Balance
-- Invoice Generation
-
-This does not yet imply that all related concepts must belong to the same Aggregate.
-
-### Client Independence
-
-`Client` is modeled independently from `Booking`.
+`Client` is managed independently from `Booking`.
 
 A Client may exist without an active Booking and may have multiple Bookings over time.
 
-This reflects the business requirement that the relationship with a Client is longer-lived than any individual Booking.
+Submitting an Inquiry does not create a Client. A Visitor becomes a Client when submitting a Booking Request.
 
-### Inquiry Independence
+### 9.3 Inquiry Independence
 
-`Inquiry` is modeled independently from the Booking lifecycle.
+`Inquiry` is independent of the Booking lifecycle.
 
-An Inquiry may be submitted by a Visitor or by an existing Client.
+It may be submitted by a Visitor or an existing Client and follows its own lifecycle.
 
-Submitting an Inquiry does not create a Client.
+### 9.4 Booking Request
 
-A Visitor becomes a Client only when a Booking Request is submitted.
+`Booking Request` is a stage in the Booking lifecycle rather than an independent Aggregate or Aggregate Root.
 
-### Booking Request
+The Booking Aggregate manages the request and its progression through approval, confirmation, and subsequent lifecycle stages.
 
-`Booking Request` is currently treated as a stage in the Booking lifecycle rather than as an independent domain entity.
+### 9.5 Payment and Booking Relationship
 
-The distinction between a Booking Request and a confirmed Booking will be refined through the Booking lifecycle and Tactical Design.
+Payment Management owns Payment Aggregates and the authoritative financial records.
 
-### Payment and Invoice Relationship
+Booking Management does not directly modify Payment records. It receives financial information through cross-context integration and maintains its own Booking Financial Snapshot.
 
-`Payment` and `Invoice` are currently represented as separate domain concepts.
+This separation preserves the independent consistency boundaries of Booking and Payment Management.
 
-A confirmed Payment may result in the generation of an Invoice.
+### 9.6 Payment and Invoice Relationship
 
-The exact ownership and Aggregate relationship between Payment, Invoice, and Booking will be determined during Tactical Design based on business invariants and consistency requirements.
+Payment and Invoice are independent Aggregates in separate Bounded Contexts.
 
-### Photography Services and Packages
+A confirmed Payment triggers Invoice generation.
 
-`Photography Service` and `Package` are managed independently from individual Bookings.
+Each confirmed Payment has at most one corresponding Invoice, and the Invoice preserves the relevant financial snapshot at generation time.
 
-A Booking may select a Package and may include one or more Photography Services.
+Invoice generation and notification delivery remain separate responsibilities.
 
-The exact representation of selected services and packages within a Booking will be refined during Tactical Design, particularly to determine whether the Booking requires its own representation of the agreed service details.
+### 9.7 Photography Services and Packages
 
-### Model Refinement
+Photography Services and Packages are independent Aggregates within the same Bounded Context.
 
-The current model is intentionally not considered a final tactical design.
+Packages reference the services they include.
 
-The following decisions remain to be refined:
+A Booking preserves the agreed service and pricing terms so that subsequent changes to the catalog do not silently alter an existing agreement.
 
-- Final Aggregate boundaries
-- Aggregate Root ownership
-- Entity versus Value Object classification
-- Business invariants
-- Ownership of relationships
-- Domain Events
-- Cross-Aggregate interactions
+### 9.8 Portfolio Management
 
-These decisions will be addressed during Tactical Design without changing the established Ubiquitous Language unless a new business discovery requires it.
+Portfolio Management is a Supporting Domain independent of Booking Management.
+
+`Album` is its Aggregate Root. The Portfolio is the overall business concept representing the photographer's public work, rather than an additional Aggregate Root.
+
+### 9.9 Domain Events and Cross-Context Communication
+
+Domain Events communicate significant changes within their owning Bounded Context.
+
+Events intended to notify other Bounded Contexts are published as integration events through the agreed reliable event publication mechanism.
+
+For example:
+
+- `PhotographySessionCompleted` is internal to Booking Management.
+- `PaymentConfirmed` is published by Payment Management for interested contexts.
+- `InvoiceGenerated` is published by Invoice Management after successful generation.
+
+Cross-context consumers must handle duplicate and potentially out-of-order event delivery safely.
+
+The detailed event ownership and integration contracts are documented in `04-domain-events.md` and `02-tactical-design.md`.
+
+### 9.10 Model Refinement
+
+The conceptual model and Aggregate boundaries are established through the approved Strategic and Tactical Design documents.
+
+Detailed database structures, field definitions, Value Object classifications, and persistence constraints will be specified in the relevant Database Design documents.
+
+This document should remain focused on business concepts, relationships, and consistency boundaries rather than implementation-specific structures.
 
 ---
 
+## 10. Related Documents
+
+- `01-business-process.md`
+- `02-use-cases.md`
+- `03-booking-lifecycle.md`
+- `04-domain-events.md`
+- `05-ubiquitous-language.md`
+- `03-architecture/06-clean-architecture.md`
+- `04-design/01-strategic-design.md`
+- `04-design/02-tactical-design.md`
+- `04-design/database/01-conceptual-model.md`
+
+---
+
+## 11. Change History
+
+| Version | Description |
+|---|---|
+| 1.0 | Initial conceptual domain model |
+| 2.0 | Aligned domain concepts, Aggregate Roots, consistency boundaries, and cross-context ownership with the approved Strategic and Tactical Design |
